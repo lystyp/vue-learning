@@ -1,26 +1,38 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div> {{ countStore.count }} </div>
+  <button @click="handleClick">Click</button>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import { createStore } from 'vuex'
+
+const store = createStore({
+  state () {
+    return {
+      countStore:{
+        count: 100
+      }
+    }
+  },
+  mutations: {
+    increment (state) {
+      state.countStore.count++
+    }
+  }
+})
 
 export default {
   name: 'App',
-  components: {
-    HelloWorld
+  data() {
+    return {
+      countStore : store.state.countStore
+    }
+  },
+  methods: {
+    handleClick : function() {
+      store.commit('increment');
+    },
   }
 }
-</script>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
+</script>
